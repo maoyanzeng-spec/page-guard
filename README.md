@@ -2,6 +2,9 @@
 
 A Chrome extension that scans webpages for suspicious elements, blocks threats in real time, and shows a risk score.
 
+<img src="docs/popup.png" alt="Page Guard popup showing 70/100 high risk score with detected issues" width="320" />
+<img src="docs/page.png" alt="Page Guard active on speedtest.net with threats removed" width="480" />
+
 ## Features
 
 | Detector | What it catches | Action |
