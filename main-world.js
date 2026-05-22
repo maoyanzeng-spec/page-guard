@@ -8,10 +8,24 @@
     window.postMessage({ _pageguard: true, type: type, detail: detail || null }, '*');
   }
 
+  // ── Track trusted user gestures ──────────────────────────────────────────────
+  // window.open calls within 1 s of a real click/key are user-initiated (OAuth,
+  // payment windows, share dialogs) and should be allowed through.
+  var _lastGesture = 0;
+  ['click', 'keydown', 'touchstart'].forEach(function (evt) {
+    document.addEventListener(evt, function (e) {
+      if (e.isTrusted) _lastGesture = Date.now();
+    }, true);
+  });
+
   // ── Block popup via window.open ───────────────────────────────────────────────
+  var _origOpen = window.open;
   window.open = function () {
+    if (Date.now() - _lastGesture < 1000) {
+      return _origOpen.apply(this, arguments); // user-initiated — allow
+    }
     signal('popup');
-    return null; // blocked
+    return null; // unprompted — blocked
   };
 
   // ── Intercept Notification permission ────────────────────────────────────────
