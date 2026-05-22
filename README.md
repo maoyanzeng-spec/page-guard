@@ -9,7 +9,7 @@ A Chrome extension that scans webpages for suspicious elements, blocks threats i
 
 | Detector | What it catches | Action |
 |---|---|---|
-| Popup | `window.open()` calls | Blocked at the API level |
+| Popup | Unprompted `window.open()` calls | Blocked; user-initiated calls (within 1 s of a click/keypress) are allowed through |
 | Notification | `Notification.requestPermission()` | Intercepted |
 | Drive-by download | Programmatic anchor clicks, suspicious blobs | Blocked at the API level |
 | Auto-redirect | `<meta http-equiv="refresh">` with delay < 5 s | Neutralized |
