@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Guard</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <span class="header-icon">🛡️</span>
+    <span class="header-title">Page Guard</span>
+  </header>
+
+  <!-- Risk gauge (circular ring) -->
+  <section class="gauge-section">
+    <div class="gauge-ring" id="gaugeRing">
+      <div class="gauge-inner">
+        <span class="gauge-score" id="gaugeScore">0</span>
+        <span class="gauge-label">/ 100</span>
+      </div>
+    </div>
+    <p class="gauge-caption" id="gaugeCaption">Scanning…</p>
+  </section>
+
+  <!-- Current page issues -->
+  <section class="issues-section">
+    <h2 class="issues-title">Detected Issues</h2>
+    <ul class="issues-list" id="issuesList"></ul>
+    <div class="all-clear" id="allClear" hidden>
+      <span class="all-clear-icon">✅</span>
+      <span>No threats detected on this page.</span>
+    </div>
+    <div class="no-data" id="noData" hidden>
+      <span>⚠️ This page cannot be scanned.</span>
+    </div>
+  </section>
+
+  <!-- Blocked attempts history -->
+  <section class="history-section">
+    <div class="history-header">
+      <h2 class="issues-title">Blocked Attempts</h2>
+      <button class="clear-btn" id="clearLogBtn">Clear</button>
+    </div>
+    <ul class="history-list" id="historyList"></ul>
+    <div class="no-history" id="noHistory" hidden>
+      <span>No blocked attempts recorded yet.</span>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">Page Guard v1.0</footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

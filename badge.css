@@ -1,0 +1,41 @@
+/* badge.css — injected into every page alongside content.js
+   Uses !important throughout to resist page stylesheet conflicts.
+   The badge only appears when riskScore > 0 (content.js sets display via JS). */
+
+#pageguard-badge {
+  display: none !important;       /* shown by JS when risk > 0 */
+  align-items: center !important;
+  gap: 6px !important;
+
+  /* Anchor to the bottom-right corner, above everything */
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 2147483647 !important;
+
+  /* Pill shape */
+  padding: 8px 16px !important;
+  border-radius: 999px !important;
+
+  /* Typography */
+  font-family: system-ui, -apple-system, Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+
+  /* Visual */
+  background: #388e3c !important;  /* overridden by risk-* classes below */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+  cursor: default !important;
+  pointer-events: none !important; /* non-interactive; popup is the main UI */
+
+  /* Smooth colour transitions */
+  transition: background 0.4s ease !important;
+}
+
+/* Risk level colour overrides */
+#pageguard-badge.risk-low    { background: #388e3c !important; }
+#pageguard-badge.risk-medium { background: #f57c00 !important; }
+#pageguard-badge.risk-high   { background: #c62828 !important; }
