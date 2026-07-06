@@ -1,66 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Page Guard — Test Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clean Player — Test Page</title>
   <style>
-    body { font-family: sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; }
-    button { margin: 8px 4px; padding: 10px 20px; font-size: 14px; cursor: pointer; }
-    .section { margin: 30px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
-    h2 { margin-top: 0; }
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 16px; line-height: 1.5; }
+    h1 { font-size: 22px; }
+    section { border: 1px solid #ddd; border-radius: 10px; padding: 16px; margin: 16px 0; }
+    h2 { font-size: 15px; margin: 0 0 10px; }
+    video { width: 100%; background: #000; border-radius: 6px; }
+    code { background: #f2f2f2; padding: 1px 5px; border-radius: 4px; }
+    .hint { color: #666; font-size: 13px; }
   </style>
 </head>
 <body>
-  <h1>Page Guard — Detector Test</h1>
-  <p>Open the extension popup to see the risk score update as you trigger each detector below.</p>
+  <h1>🎬 Clean Player — Test Page</h1>
+  <p class="hint">
+    Load the unpacked extension, open this page, let the videos start loading, then
+    click the toolbar icon. Each media stream below should appear in the popup;
+    click <b>Play</b> to open it in the floating player. Drag the header to move it,
+    drag the bottom-right corner to resize.
+  </p>
 
-  <!-- Detector 1: Popup -->
-  <div class="section">
-    <h2>1. Popup detector</h2>
-    <p>Click the button to trigger a <code>window.open()</code> call.</p>
-    <button onclick="window.open('https://example.com')">Open popup</button>
-  </div>
+  <section>
+    <h2>1. Progressive MP4 (direct file)</h2>
+    <video controls preload="metadata"
+      src="https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4">
+    </video>
+    <p class="hint">A plain <code>.mp4</code> — detected via its <code>Content-Length</code>.
+      (If this test URL is offline, swap in any public sample MP4.)</p>
+  </section>
 
-  <!-- Detector 2: Notification -->
-  <div class="section">
-    <h2>2. Notification detector</h2>
-    <p>Click the button to request notification permission.</p>
-    <button onclick="Notification.requestPermission()">Request notification</button>
-  </div>
+  <section>
+    <h2>2. HLS stream (.m3u8, adaptive)</h2>
+    <video controls preload="none" id="hls"></video>
+    <p class="hint">The extension should list this as an <b>HLS stream</b> and play it through hls.js.</p>
+    <script>
+      // Fetch a public test manifest so background.js sees the .m3u8 request.
+      // Chrome won't play HLS natively, but detection only needs the request;
+      // the extension's own player uses hls.js to actually play it.
+      var m3u8 = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+      fetch(m3u8).catch(function () {});
+      document.getElementById('hls').src = m3u8;
+    </script>
+  </section>
 
-  <!-- Detector 3: External links (auto-triggers on load) -->
-  <div class="section">
-    <h2>3. External links detector (auto)</h2>
-    <p>This section has 20 external links — the detector fires automatically on page load.</p>
-    <a href="https://site1.example.com">Site 1</a>
-    <a href="https://site2.example.com">Site 2</a>
-    <a href="https://site3.example.com">Site 3</a>
-    <a href="https://site4.example.com">Site 4</a>
-    <a href="https://site5.example.com">Site 5</a>
-    <a href="https://site6.example.com">Site 6</a>
-    <a href="https://site7.example.com">Site 7</a>
-    <a href="https://site8.example.com">Site 8</a>
-    <a href="https://site9.example.com">Site 9</a>
-    <a href="https://site10.example.com">Site 10</a>
-    <a href="https://site11.example.com">Site 11</a>
-    <a href="https://site12.example.com">Site 12</a>
-    <a href="https://site13.example.com">Site 13</a>
-    <a href="https://site14.example.com">Site 14</a>
-    <a href="https://site15.example.com">Site 15</a>
-    <a href="https://site16.example.com">Site 16</a>
-    <a href="https://site17.example.com">Site 17</a>
-    <a href="https://site18.example.com">Site 18</a>
-    <a href="https://site19.example.com">Site 19</a>
-    <a href="https://site20.example.com">Site 20</a>
-  </div>
-
-  <!-- Detector 4: Fake download buttons (auto-triggers on load) -->
-  <div class="section">
-    <h2>4. Fake download button detector (auto)</h2>
-    <p>These deceptive buttons are detected automatically on page load.</p>
-    <button style="width:200px">Free Download</button>
-    <button style="width:200px">Download Now</button>
-    <button style="width:200px">Install Now</button>
-  </div>
+  <p class="hint">
+    Note: blob:/MediaSource players (YouTube-style) and DRM streams (Netflix) are
+    intentionally out of scope and won't be extractable.
+  </p>
 </body>
 </html>

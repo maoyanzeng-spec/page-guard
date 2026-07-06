@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
 
 ## What this is
 
@@ -108,7 +108,7 @@ and re-test `test.html`. It loads both as a content script (shares `content.js`'
 **and** as a plain `<script>` in `popup.html` (for inline previews). It is not a web-accessible
 resource — only the extension's own scripts/pages reference it.
 
-## Keep AGENTS.md in sync
+## Keep CLAUDE.md in sync
 
-`AGENTS.md` is a near-verbatim copy of this file for Codex. When you change architecture,
-detectors, permissions, or the CORS notes here, mirror the edits into `AGENTS.md` so they don't drift.
+`CLAUDE.md` is a near-verbatim copy of this file for Claude Code. When you change architecture,
+detectors, permissions, or the CORS notes here, mirror the edits into `CLAUDE.md` so they don't drift.
